@@ -1,0 +1,50 @@
+{
+    "game-exists": 1,
+    "current-world": 1,
+    "world-times": [
+        83,
+        0,
+        0,
+        0
+    ],
+    "setting-menus": [
+        "Game",
+        "Keybinds",
+        "Audio",
+        "Display",
+        "Debug",
+        "Quit to Menu"
+    ],
+    "setting-items": {
+        "Game": [
+            {
+                "name": "Show Timer",
+                "type": "Dropdown",
+                "value": "World Time",
+                "active": 0,
+                "options": [
+                    "None",
+                    "World Time",
+                    "Game Time"
+                ]
+            }
+        ],
+        "Keybinds": [],
+        "Audio": [],
+        "Display": [
+            {
+                "name": "Show FPS",
+                "type": "Checkbox",
+                "value": 1
+            }
+        ],
+        "Debug": [
+            {
+                "name": "Show Tile IDs",
+                "type": "Checkbox",
+                "value": 1
+            }
+        ],
+        "Quit to Menu": []
+    }
+}
