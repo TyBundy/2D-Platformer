@@ -1,4 +1,4 @@
-"# 2D-Platformer" 
+# 2D-Platformer
 A simple 2D platformer game
 
 How to run:
