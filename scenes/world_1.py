@@ -99,8 +99,6 @@ def gameloop():
             Globals.previous_frames.pop(0)
 
         # Update player/level stuff
-        Globals.player.wall_jump_delay = max(0, Globals.player.wall_jump_delay-1)
-        Globals.player.coyotee_timer = max(0, Globals.player.coyotee_timer-1)
         Globals.player.update(Globals.level)
 
         Globals.level.draw()

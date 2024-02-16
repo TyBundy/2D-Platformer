@@ -81,9 +81,12 @@ def gameloop():
         Globals.mouse_position = pyg.mouse.get_pos()
         keys = pyg.key.get_pressed()        
 
-        # Check kill button
+        # Check kill/exit buttons
         if keys[pyg.K_F1]:
             return "Force Quit"
+        
+        if keys[pyg.K_F1]:
+            return "Quit"
 
         draw()
 

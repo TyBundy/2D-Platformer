@@ -103,6 +103,9 @@ class Player(Entity):
     def update(self, level):
         """Updates the player based on its velocity"""
         self.respawn_timer = max(0, self.respawn_timer-1)
+        self.wall_jump_delay = max(0, self.wall_jump_delay-1)
+        self.coyotee_timer = max(0, self.coyotee_timer-1)
+
         if self.respawn_timer > 40:
             self.velocity = [0, 0]
             return

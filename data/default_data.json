@@ -1,8 +1,8 @@
 {
-    "game-exists": 1,
-    "current-world": 1,
+    "game-exists": 0,
+    "current-world": 0,
     "world-times": [
-        141,
+        83,
         0,
         0,
         0
@@ -35,14 +35,14 @@
             {
                 "name": "Show FPS",
                 "type": "Checkbox",
-                "value": 1
+                "value": 0
             }
         ],
         "Debug": [
             {
                 "name": "Show Tile IDs",
                 "type": "Checkbox",
-                "value": 1
+                "value": 0
             }
         ],
         "Quit to Menu": []

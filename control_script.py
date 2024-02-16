@@ -30,7 +30,10 @@ def Main():
 
 
     # Set up data
-    Globals.data = json.load(open("data/player_data.json", "r"))
+    try:
+        Globals.data = json.load(open("data/player_data.json", "r"))
+    except FileNotFoundError:
+        Globals.data = json.load(open("data/default_data.json"), "r")
     Globals.level_data = json.load(open("data/level_data.json", "r"))
     Settings.SETTING_ITEMS = Globals.data["setting-items"]
     Settings.SETTING_MENUS = Globals.data["setting-menus"]
