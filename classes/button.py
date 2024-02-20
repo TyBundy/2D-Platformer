@@ -122,7 +122,7 @@ class Dropdown(Button):
         active_width, active_height = self.font.size(active_option)
         
         adjust_x, adjust_y = self.x * (Globals.WINDOW_WIDTH / Globals.WIDTH), self.y * (Globals.WINDOW_HEIGHT / Globals.HEIGHT)
-        text_width, text_height = text_width * (Globals.WINDOW_WIDTH / Globals.WIDTH), text_height * (Globals.WINDOW_HEIGHT / Globals.HEIGHT)
+        text_width *= (Globals.WINDOW_WIDTH / Globals.WIDTH)
         active_width, active_height = active_width * (Globals.WINDOW_WIDTH / Globals.WIDTH), active_height * (Globals.WINDOW_HEIGHT / Globals.HEIGHT)
 
         return collider.collides_rect((adjust_x + text_width + 20, adjust_y - active_height/2 - 2, active_width + 24, active_height + 4), Globals.mouse_position)
@@ -160,7 +160,6 @@ class Dropdown(Button):
 
         adjust_x, adjust_y = self.x * (Globals.WINDOW_WIDTH / Globals.WIDTH), self.y * (Globals.WINDOW_HEIGHT / Globals.HEIGHT)
         text_width *= (Globals.WINDOW_WIDTH / Globals.WIDTH)
-        active_width, active_height = active_width * (Globals.WINDOW_WIDTH / Globals.WIDTH), active_height * (Globals.WINDOW_HEIGHT / Globals.HEIGHT)
 
         for i in range(num_options):
             option = self.options[i]
@@ -168,6 +167,7 @@ class Dropdown(Button):
             if active_width < temp_w:
                 active_width = temp_w
         
+        active_width, active_height = active_width * (Globals.WINDOW_WIDTH / Globals.WIDTH), active_height * (Globals.WINDOW_HEIGHT / Globals.HEIGHT)
         for i in range(num_options):
             if collider.collides_rect((adjust_x + text_width + 24, adjust_y - active_height/2-2 + active_height * i, active_width + 24, active_height + 4), Globals.mouse_position):
                 return i

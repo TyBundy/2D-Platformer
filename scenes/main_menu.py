@@ -115,6 +115,7 @@ def gameloop():
                         Globals.data["game-exists"] = 1
                         Globals.data["current-world"] = 1
                         Globals.data["world-times"] = [0, 0, 0, 0]
+                        Globals.data["player-position"] = [0, 0]
                         return "New Game"
             
         draw()
