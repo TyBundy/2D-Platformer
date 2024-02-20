@@ -3,7 +3,7 @@ import pygame as pyg
 import time
 
 # Custom modules
-from classes.globals import Colors, Globals, Keybinds, Settings
+from classes.globals import Colors, Globals, Keybinds
 from classes.level import Level
 from classes.platform import Platform
 from scripts.player_script import Player
@@ -27,7 +27,13 @@ def load():
     Globals.settings_background = Colors.DARK_GRAY
 
     # Set up player
-    Globals.player = Player(Globals.reset_pos)
+    pos = Globals.reset_pos
+    try:
+        if Globals.data["player-position"] != [0, 0]:
+            pos = Globals.data["player-position"]
+    except KeyError:
+        pass
+    Globals.player = Player(pos)
     load_level(0)
 
 def load_level(level_id):
@@ -47,7 +53,9 @@ def gameloop():
     while True:
         if frame_counter == 60:
             frame_counter = 0
-            Globals.data["world-times"][Globals.data["current-world"]-1] += 1
+            if not settings_toggled:
+                Globals.data["world-times"][Globals.data["current-world"]-1] += 1
+
         Globals.current_time = time.time()
 
         # Save the current mouse positon and get the current keys pressed
@@ -62,6 +70,13 @@ def gameloop():
                 if event.key == Keybinds.jump or event.key == Keybinds.jump_alt:
                     Globals.player.jump()
 
+                elif event.key == pyg.K_F1:
+                    return "Force Quit"
+                elif event.key == pyg.K_F2:
+                    settings_toggled = False
+                    Globals.current_menu = "None"
+                    return "Main Menu"
+
                 elif event.key == Keybinds.esc:
                     settings_toggled = not settings_toggled
                     settings_animate_period = settings_delay
@@ -72,15 +87,6 @@ def gameloop():
                     settings_toggled = False
                     Globals.current_menu = "None"
                     return "Main Menu"
-                
-
-        # Check kill/exit buttons
-        if keys[pyg.K_F1]:
-            return "Force Quit"
-        elif keys[pyg.K_F2]:
-            settings_toggled = False
-            Globals.current_menu = "None"
-            return "Main Menu"
         
         # Player movement
         Globals.player.holding_left = False
@@ -100,6 +106,7 @@ def gameloop():
 
         # Update player/level stuff
         Globals.player.update(Globals.level)
+        Globals.data["player-position"] = [Globals.player.x, Globals.player.y]
 
         Globals.level.draw()
         draw()
@@ -122,8 +129,7 @@ def draw():
     Globals.player.draw()
 
     # Draw fps
-    # Index 0 == Display FPS
-    if Settings.SETTING_ITEMS["Display"][0]["value"]:
+    if Globals.setting_buttons["Display"][0].value:
         fps = 0
         try:
             temp_frame_list = []
@@ -139,18 +145,17 @@ def draw():
         Globals.VID_BUFFER.blit(Fonts.fps_font.render(str(fps), True, Colors.WHITE), (WIDTH - text_width - 2, 2))
 
     # Get timer
-    # Index 0 == Display timer
-    if Settings.SETTING_ITEMS["Game"][0]["value"] == "World Time":
+    if Globals.setting_buttons["Game"][0].value == "World Time":
         timer = Globals.data["world-times"][Globals.data["current-world"]-1]
 
-    elif Settings.SETTING_ITEMS["Game"][0]["value"] == "Game Time":
+    elif Globals.setting_buttons["Game"][0].value == "Game Time":
         timer = 0
         for val in Globals.data["world-times"]:
             timer += val
 
     # Draw timer
-    if Settings.SETTING_ITEMS["Game"][0]["value"] != "None":
-        timer_parts = [str(timer // 3600), str(timer // 60), str(timer % 60)]
+    if Globals.setting_buttons["Game"][0].value != "None":
+        timer_parts = [str(timer // 3600), str(timer // 60 % 60), str(timer % 60)]
         timer_parts = [("0" if len(timer_parts[i]) == 1 else "") + timer_parts[i] for i in range(len(timer_parts))]
         timer_text = ":".join(timer_parts)
 
@@ -164,8 +169,7 @@ def draw():
         if settings_toggled:
             pyg.draw.rect(Globals.VID_BUFFER, Colors.DARK_GRAY, (0, 0, Globals.WIDTH, Globals.HEIGHT / settings_delay * (settings_delay - settings_animate_period)))
             if settings_animate_period == 0:
-                drawer.draw_settings(True)
-
+                drawer.draw_settings(quit=True)
         else:
             pyg.draw.rect(Globals.VID_BUFFER, Colors.DARK_GRAY, (0, 0, Globals.WIDTH, Globals.HEIGHT - Globals.HEIGHT / settings_delay * (settings_delay - settings_animate_period)))
 

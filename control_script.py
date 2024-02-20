@@ -7,6 +7,7 @@ import os
 
 # Custom modules
 from classes.globals import Globals, Settings
+from classes.button import Checkbox, Dropdown
 
 # Scenes
 import scenes.main_menu as main_menu
@@ -26,7 +27,7 @@ def Main():
     Globals.WINDOW_WIDTH, Globals.WINDOW_HEIGHT = info_object.current_w, info_object.current_h
     Globals.WIDTH, Globals.HEIGHT = (1920, 1080)
     Globals.WINDOW = pyg.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
-    pyg.display.set_caption("2D Platformer (Def not final title)")
+    pyg.display.set_caption("The Adventures of Sprite")
 
 
     # Set up data
@@ -51,6 +52,29 @@ def Main():
         
         # Exit the game
         elif return_val in ["Quit", "Exit"]:
+            # Update setting items values based on the buttons that have changed
+            for menu in Globals.setting_buttons:
+                temp = []
+                # Loop through the buttons
+                for button in Globals.setting_buttons[menu]:
+                    if isinstance(button, Checkbox): 
+                        temp += [{
+                            "name": button.text,
+                            "type": "Checkbox",
+                            "value": button.value
+                        }]
+                    elif isinstance(button, Dropdown):
+                        temp += [{
+                            "name": button.text,
+                            "type": "Dropdown",
+                            "value": button.value,
+                            "active": button.active,
+                            "options": button.options
+                        }]
+                # Save it
+                Globals.data["setting-items"][menu] = temp
+
+            # Save data to file
             with open("data/player_data.json", "w") as outfile:
                 outfile.write(json.dumps(Globals.data, indent=4))
             return

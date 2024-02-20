@@ -3,7 +3,7 @@ import pygame as pyg
 pyg.init()
 pyg.font.init()
 
-from classes.globals import Colors, Globals, Settings
+from classes.globals import Colors, Globals
 
 class Platform:
     def __init__(self, location, size, id=0):
@@ -24,6 +24,6 @@ class Platform:
                 Globals.VID_BUFFER.blit(self.sprites[0], (self.x + x * 40, Globals.HEIGHT - self.y - self.height + y * 40))
             
         # Index 0 == Show Tile IDs
-        if Settings.SETTING_ITEMS["Debug"][0]["value"]:
+        if Globals.setting_buttons["Debug"][0].value:
             text_width, text_height = font.size(str(self.id))
             Globals.VID_BUFFER.blit(font.render(str(self.id), True, Colors.WHITE), (self.x + (self.width - text_width)/2, Globals.HEIGHT - self.y - (self.height + text_height)/2))

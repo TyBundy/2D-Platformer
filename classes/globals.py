@@ -72,6 +72,9 @@ class Globals:
     reset_pos = [0, 0]
     mouse_position = [0,0]
     previous_frames = []
+    sidebar_buttons = []
+    setting_buttons = {}
+
     data = {}
     level_data = {}
 

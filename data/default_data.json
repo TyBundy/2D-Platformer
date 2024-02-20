@@ -1,6 +1,7 @@
 {
     "game-exists": 0,
     "current-world": 0,
+    "player_position": [0, 0],
     "world-times": [
         0,
         0,
@@ -20,7 +21,7 @@
             {
                 "name": "Show Timer",
                 "type": "Dropdown",
-                "value": "World Time",
+                "value": "None",
                 "active": 0,
                 "options": [
                     "None",
