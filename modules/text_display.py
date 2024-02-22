@@ -9,5 +9,5 @@ def center_text(text, font, color, location):
     Globals.VID_BUFFER.blit(font.render(text, True, color), ((location[0] - width/2), (location[1] - height/2)))
 
 def left_text(text, font, color, location):
-    width, height = font.size(text)
+    _, height = font.size(text)
     Globals.VID_BUFFER.blit(font.render(text, True, color), ((location[0]), (location[1] - height/2)))

@@ -113,9 +113,9 @@ def gameloop():
                         return "Continue Game"
                     else:
                         Globals.data["game-exists"] = 1
-                        Globals.data["current-world"] = 1
-                        Globals.data["world-times"] = [0, 0, 0, 0]
-                        Globals.data["player-position"] = [0, 0]
+                        Globals.data["current-world"] = 0
+                        Globals.data["current-level"] = 0
+                        Globals.data["world-times"] = [[0, 0, 0, 0]]
                         return "New Game"
             
         draw()
@@ -139,8 +139,9 @@ def check_mouse_press():
             # Check which button was clicked
             if button.text == "New Game":
                 Globals.data["game-exists"] = 1
-                Globals.data["current-world"] = 1
-                Globals.data["world-times"] = [0, 0, 0, 0]
+                Globals.data["current-world"] = 0
+                Globals.data["current-level"] = 0
+                Globals.data["world-times"] = [[0, 0, 0, 0]]
                 return "New Game"
             
             elif button.text == "Continue Game":

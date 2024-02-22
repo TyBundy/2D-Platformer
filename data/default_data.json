@@ -1,12 +1,14 @@
 {
     "game-exists": 0,
     "current-world": 0,
+    "current-level": 0,
+    "deaths": 0,
     "player_position": [0, 0],
     "world-times": [
+        [0,
         0,
         0,
-        0,
-        0
+        0]
     ],
     "setting-menus": [
         "Game",
@@ -42,6 +44,11 @@
         "Debug": [
             {
                 "name": "Show Tile IDs",
+                "type": "Checkbox",
+                "value": 0
+            },
+            {
+                "name": "Check for Updates",
                 "type": "Checkbox",
                 "value": 0
             }

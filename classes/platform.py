@@ -6,10 +6,10 @@ pyg.font.init()
 from classes.globals import Colors, Globals
 
 class Platform:
-    def __init__(self, location, size, id=0):
+    def __init__(self, location, size, id=0, type="steel"):
         self.x, self.y = location
         self.width, self.height = size
-        self.type = "steel"
+        self.type = type
         self.id = id
 
         self.sprites = [pyg.image.load("resources/tiles/" + self.type + "/single.png")]
@@ -17,8 +17,8 @@ class Platform:
     def draw(self):
         font = pyg.font.SysFont("consolas", 20)
 
-        total_x = self.width // 40
-        total_y = self.height // 40
+        total_x = max(1, self.width // 40)
+        total_y = max(1, self.height // 40)
         for y in range(total_y):
             for x in range(total_x):
                 Globals.VID_BUFFER.blit(self.sprites[0], (self.x + x * 40, Globals.HEIGHT - self.y - self.height + y * 40))

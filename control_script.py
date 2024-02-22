@@ -6,12 +6,14 @@ import json
 import os
 
 # Custom modules
-from classes.globals import Globals, Settings
+from classes.globals import Colors, Globals, Settings
 from classes.button import Checkbox, Dropdown
 
 # Scenes
 import scenes.main_menu as main_menu
 import scenes.world_1 as world_1
+
+import updater
 
 worlds = [
     world_1
@@ -20,6 +22,20 @@ worlds = [
 # Main function, runs on program start
 def Main():
     os.system("cls")
+    
+    # Set up data
+    try:
+        Globals.data = json.load(open("data/player_data.json", "r"))
+    except FileNotFoundError:
+        Globals.data = json.load(open("data/default_data.json", "r"))
+    
+    Globals.level_data = json.load(open("data/level_data.json", "r"))
+    Settings.SETTING_ITEMS = Globals.data["setting-items"]
+    Settings.SETTING_MENUS = Globals.data["setting-menus"]
+
+    # Check for update
+    if Globals.data["setting-items"]["Debug"][1]["value"]:
+        updater.check()
 
     # Set up display
     pyg.init()
@@ -28,16 +44,6 @@ def Main():
     Globals.WIDTH, Globals.HEIGHT = (1920, 1080)
     Globals.WINDOW = pyg.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
     pyg.display.set_caption("The Adventures of Sprite")
-
-
-    # Set up data
-    try:
-        Globals.data = json.load(open("data/player_data.json", "r"))
-    except FileNotFoundError:
-        Globals.data = json.load(open("data/default_data.json", "r"))
-    Globals.level_data = json.load(open("data/level_data.json", "r"))
-    Settings.SETTING_ITEMS = Globals.data["setting-items"]
-    Settings.SETTING_MENUS = Globals.data["setting-menus"]
 
     # Set up scenes
     Globals.current_scene = main_menu
@@ -81,6 +87,7 @@ def Main():
         
         # Go back to the main menu
         elif return_val == "Main Menu":
+            Globals.settings_background = Colors.BLACK
             Globals.current_scene = main_menu
             Globals.current_scene.load()
             return_val = Globals.current_scene.gameloop()

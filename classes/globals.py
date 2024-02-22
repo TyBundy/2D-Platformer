@@ -19,6 +19,11 @@ class Keybinds:
     right_alt = pyg.K_RIGHT
     jump = pyg.K_SPACE
     jump_alt = pyg.K_w
+    walk = pyg.K_LCTRL
+    walk_alt = pyg.K_RCTRL
+    duck = pyg.K_s
+    duck_alt = pyg.K_DOWN
+    respawn = pyg.K_BACKSPACE
 
     # Control keys
     esc = pyg.K_ESCAPE
@@ -66,9 +71,11 @@ class Globals:
     gravity = 0.5
 
     FPS = 60
+    current_framerate = 0
     current_time = 0
     clock = pyg.time.Clock()
     VID_BUFFER = pyg.Surface((1920, 1080))
+    PLATFORM_BUFFER = pyg.Surface((1920, 1080))
     reset_pos = [0, 0]
     mouse_position = [0,0]
     previous_frames = []
