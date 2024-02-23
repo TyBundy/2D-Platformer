@@ -1,1 +1,9 @@
+# Folders
+__pycache__/
+classes/__pycache__/
+modules/__pycache__/
+scenes/__pycache__/
+scripts/__pycache__/
+
+# Files
 data/player_data.json

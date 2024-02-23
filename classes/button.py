@@ -18,6 +18,7 @@ class Button:
 class MenuButton(Button):
     def __init__(self, text, pos, size, font):
         super().__init__(text, pos, size, font)
+        self.type = "MenuButton"
 
     def draw(self):
         """Draws the button"""
@@ -41,6 +42,7 @@ class MenuButton(Button):
 class SidebarButton(Button):
     def __init__(self, text, pos, size, font):
         super().__init__(text, pos, size, font)
+        self.type = "SidebarButton"
 
     def draw(self):
         """Draws the button"""
@@ -69,6 +71,7 @@ class Checkbox(Button):
     def __init__(self, text, pos, size, font, value):
         super().__init__(text, pos, size, font)
         self.value = value
+        self.type = "Checkbox"
 
     def draw(self):
         """Draw the checkbox"""
@@ -94,6 +97,7 @@ class Dropdown(Button):
         self.value = value
         self.active = active
         self.options = options
+        self.type = "Dropdown"
 
     def draw(self):
         """Draws the dropdown while inactive"""

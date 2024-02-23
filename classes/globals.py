@@ -84,6 +84,12 @@ class Globals:
 
     data = {}
     level_data = {}
+    debug_active = False
+    debug = {
+        "hovering": 0,
+        "hover_object": None,
+        "hover_type": "None"
+    }
 
     player = None
     level = None

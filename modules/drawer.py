@@ -26,6 +26,11 @@ def draw_settings(quit=False):
             button.draw()
         elif quit:
             button.draw()
+            
+        if Globals.debug_active and button.check_mcollision():
+            Globals.debug["hovering"] = 1
+            Globals.debug["hover_object"] = button
+            Globals.debug["hover_tyoe"] = button.type
 
     # Draw setting items
     for button in Globals.setting_buttons[Globals.current_setting]:

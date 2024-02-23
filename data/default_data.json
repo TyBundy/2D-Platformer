@@ -3,7 +3,7 @@
     "current-world": 0,
     "current-level": 0,
     "deaths": 0,
-    "player_position": [0, 0],
+    "player-position": [0, 0],
     "world-times": [
         [0,
         0,

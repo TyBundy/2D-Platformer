@@ -9,6 +9,7 @@ from classes.button import MenuButton, SidebarButton, Checkbox, Dropdown
 
 import modules.text_display as text_display
 import modules.drawer as drawer
+import modules.debug as debug
 
 class Fonts:
     back_box_font = pyg.font.SysFont("consolas", 20)
@@ -53,31 +54,6 @@ def load():
 
         Globals.setting_buttons[menu] = temp_buttons
 
-# Draws the main menu
-def draw():
-    global buttons
-    WINDOW = Globals.WINDOW
-    WIDTH, HEIGHT = Globals.WIDTH, Globals.HEIGHT
-
-    Globals.VID_BUFFER.fill(Colors.BLACK)
-
-    # Display settings menu
-    if Globals.current_menu == "Settings": 
-        buttons[2].draw()
-        drawer.draw_settings()
-
-    # Display main menu
-    else:
-        text_display.center_text("The Adventures of Sprite", Fonts.title_font, Colors.WHITE, (WIDTH/2, 100))
-
-        # Menu buttons
-        for button in buttons[Globals.data["game-exists"]]:
-            button.draw()
-
-    # Display image buffer to screen
-    WINDOW.blit(pyg.transform.scale(Globals.VID_BUFFER, (Globals.WINDOW_WIDTH, Globals.WINDOW_HEIGHT)), ((WIDTH - Globals.WINDOW_WIDTH)/2, (HEIGHT - Globals.WINDOW_HEIGHT)/2))
-    pyg.display.update()
-
 # Main menu control loop
 def gameloop():    
     while True:
@@ -107,6 +83,10 @@ def gameloop():
                 elif event.key == pyg.K_F2:
                     return "Quit"
 
+                # Debug keys
+                elif event.key == pyg.K_F3:
+                    Globals.debug_active = not Globals.debug_active
+
                 # Check enter key
                 elif event.key == Keybinds.enter and Globals.current_menu == "None":
                     if Globals.data["game-exists"]:
@@ -117,9 +97,45 @@ def gameloop():
                         Globals.data["current-level"] = 0
                         Globals.data["world-times"] = [[0, 0, 0, 0]]
                         return "New Game"
-            
+
         draw()
         Globals.clock.tick(Globals.FPS)
+
+# Draws the main menu
+def draw():
+    global buttons
+    WINDOW = Globals.WINDOW
+    WIDTH, HEIGHT = Globals.WIDTH, Globals.HEIGHT
+
+    Globals.VID_BUFFER.fill(Colors.BLACK)
+
+    if Globals.debug_active:
+        Globals.debug["hovering"] = 0
+
+    # Display settings menu
+    if Globals.current_menu == "Settings": 
+        buttons[2].draw()
+        drawer.draw_settings()
+
+    # Display main menu
+    else:
+        text_display.center_text("The Adventures of Sprite", Fonts.title_font, Colors.WHITE, (WIDTH/2, 100))
+
+        # Menu buttons
+        for button in buttons[Globals.data["game-exists"]]:
+            button.draw()
+            if Globals.debug_active and button.check_mcollision():
+                Globals.debug["hovering"] = 1
+                Globals.debug["hover_object"] = button
+                Globals.debug["hover_tyoe"] = button.type
+
+    # Draw debug menu if active
+    if Globals.debug_active:
+        debug.draw_debug_menu()
+
+    # Display image buffer to screen
+    WINDOW.blit(pyg.transform.scale(Globals.VID_BUFFER, (Globals.WINDOW_WIDTH, Globals.WINDOW_HEIGHT)), ((WIDTH - Globals.WINDOW_WIDTH)/2, (HEIGHT - Globals.WINDOW_HEIGHT)/2))
+    pyg.display.update()
 
 # Checks what things were pressed
 def check_mouse_press():
