@@ -32,6 +32,7 @@ def draw_debug_menu():
         debug_list += ["W/H: (" + str(ow) + ", " + str(oh) + ")"]
         debug_list += ["Left: " + str(int(x - ow/2)) + " | Top: " + str(int(y - oh/2))]
         debug_list += ["Text: " + object.text]
+        debug_list += ["Type: " + object.type]
 
     # Display text
     vert_offset = 4
